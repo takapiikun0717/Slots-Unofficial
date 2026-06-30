@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "slots_unofficial",
+	"version": "1.2.0",
+	"name": "slots Unofficial",
+	"description": "Slots modの非公式フォーク版です",
+	"authors": [ "takapii_kun0717" ],
+	"contact": {
+		"website": "",
+		"repo": "",
+		"issues": ""
+	},
+	"license": "MIT",
+	"icon": "logo.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.takapii_kun0717.slots_unofficial.fabric.SlotsFabric"
+		],
+		"client": [
+			"com.takapii_kun0717.slots_unofficial.client.SlotsFabricClient"
+		],
+		"modmenu": [
+			"com.takapii_kun0717.slots_unofficial.common.config.fabric.FabricMenuConfig"
+		]
+	},
+	"mixins": [
+		"slots_unofficial-fabric.mixins.json"
+	],
+	"depends": {
+		"fabric": "*",
+		"minecraft": ">=1.20",
+		"resourcefulconfig": ">=2.0.0"
+	}
+}

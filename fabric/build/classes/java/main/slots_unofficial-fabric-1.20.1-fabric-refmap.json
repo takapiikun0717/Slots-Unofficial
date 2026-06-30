@@ -1,0 +1,14 @@
+{
+  "mappings": {
+    "com/ketheroth/slots/mixin/PlayerMixin": {
+      "giveExperienceLevels": "Lnet/minecraft/class_1657;method_7316(I)V"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "com/ketheroth/slots/mixin/PlayerMixin": {
+        "giveExperienceLevels": "Lnet/minecraft/class_1657;method_7316(I)V"
+      }
+    }
+  }
+}
