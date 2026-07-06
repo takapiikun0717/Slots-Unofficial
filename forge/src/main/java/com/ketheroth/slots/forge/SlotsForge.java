@@ -84,7 +84,8 @@ public class SlotsForge {
 		if (experienceLevel < 0) {
 			experienceLevel = 0;
 		}
-		int newSlotAmount = Math.min(54, experienceLevel / SlotsConfig.levelPerSlot);
+		int newSlotAmount = Math.min(SlotsConfig.getMaxUnlockedSlots(), experienceLevel / SlotsConfig.levelPerSlot);
+		
 		int delta = newSlotAmount - playerData.getXpUnlockedSlots();
 		if (delta == 0) {
 			return;
