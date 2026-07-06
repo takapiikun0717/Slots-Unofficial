@@ -6,6 +6,8 @@ import com.teamresourceful.resourcefulconfig.common.annotations.Config;
 import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
+import dev.architectury.utils.value.IntValue;
+
 @Config(Slots.MOD_ID)
 public final class SlotsConfig {
 
@@ -22,4 +24,12 @@ public final class SlotsConfig {
 	@Comment("Determine if slot reward items are preserved when you die")
 	public static boolean preserveRewardsOnDeath = true;
 
+    @ConfigEntry(id = "max_unlocked_slots", type = EntryType.INTEGER, translation = "slots.config.max_unlocked_slots")
+    @Comment("Maximum number of slots players can unlock. Valid range: 1-54.")
+    public static int maxUnlockedSlots = 54;    
+	public static int getMaxUnlockedSlots() {
+
+      return Math.max(1, Math.min(54, maxUnlockedSlots));
+
+    }
 }
