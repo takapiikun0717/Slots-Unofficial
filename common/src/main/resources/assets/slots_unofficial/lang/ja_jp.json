@@ -5,5 +5,6 @@
   "item.slots.slot_reward": "スロット報酬",
   "slots.config.level_per_slot": "スロット解放に必要なレベル",
   "slots.config.generate_item_reward": "スロット報酬アイテムを生成する",
-  "slots.config.preserve_rewards_on_death": "死亡時に報酬スロットを保持する"
+  "slots.config.preserve_rewards_on_death": "死亡時に報酬スロットを保持する",
+  "slots.config.max_unlocked_slots": "最大解放スロット数"
 }

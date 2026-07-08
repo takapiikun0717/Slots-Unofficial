@@ -80,6 +80,11 @@ public class SlotsSavedData extends SavedData {
 
 		public void addSlot() {
 
+			if (this.unlockedSlots >= SlotsConfig.getMaxUnlockedSlots()) {
+                return;
+            }
+			
+
     if (this.unlockedSlots >= 54) {
         return;
     }
