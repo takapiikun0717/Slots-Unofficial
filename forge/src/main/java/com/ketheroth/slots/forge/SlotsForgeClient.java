@@ -28,4 +28,5 @@ public class SlotsForgeClient {
     public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
        event.register(SlotKeyMapping.KEY_OPEN);
     }
+
 }
