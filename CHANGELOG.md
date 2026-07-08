@@ -26,3 +26,10 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Port to 1.20.1.
 - We've added the ability to limit the maximum number of slots that can be opened in the config.
+
+
+## [1.20.1-1.4.0]
+
+### Added
+- Port to 1.20.1.
+- We've added the ability to open the “slots” inventory from the player's inventory.
