@@ -6,5 +6,13 @@
 	"slots.config.level_per_slot": "Level per slot",
 	"slots.config.generate_item_reward": "Generate item reward",
 	"slots.config.preserve_rewards_on_death": "Preserve rewards on death",
-	"slots.config.max_unlocked_slots": "Maximum unlocked slots"
+	"slots.config.max_unlocked_slots": "Maximum unlocked slots",
+    "commands.slots.open.self": "[Slots Unofficial]Opened your Slots inventory.",
+    "commands.slots.open.success": "[Slots Unofficial]Opened Slots inventory for %s player(s).",
+	"commands.slots.give.failed": "[Slots Unofficial]The specified slot does not exist or already contains an item,\nso the operation could not be performed",
+    "commands.slots.give.success": "[Slots Unofficial]The item has been placed in the specified slot",
+    "commands.slots.unlock.success": "[Slots Unofficial]Unlocked a new slot!",
+    "commands.slots.unlock.not_enough_xp": "[Slots Unofficial]You don't have enough experience!",
+	"commands.slots.unlock.max_slots": "[Slots Unofficial]You have reached the maximum number of slots.",
+	"commands.slots.unlock.success_multiple": "[Slots Unofficial]Unlocked %s slots!"
 }

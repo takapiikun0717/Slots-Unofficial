@@ -6,7 +6,6 @@ import com.teamresourceful.resourcefulconfig.common.annotations.Config;
 import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
-import dev.architectury.utils.value.IntValue;
 
 @Config(Slots.MOD_ID)
 public final class SlotsConfig {

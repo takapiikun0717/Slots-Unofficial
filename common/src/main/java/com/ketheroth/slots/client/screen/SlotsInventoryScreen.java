@@ -2,8 +2,6 @@ package com.ketheroth.slots.client.screen;
 
 import com.ketheroth.slots.Slots;
 import com.ketheroth.slots.common.inventory.container.SlotsMenu;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

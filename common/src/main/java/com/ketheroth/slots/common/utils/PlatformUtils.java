@@ -1,6 +1,5 @@
 package com.ketheroth.slots.common.utils;
 
-import com.ketheroth.slots.common.network.HandledPacket;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerPlayer;

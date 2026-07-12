@@ -151,6 +151,13 @@ public class SlotsSavedData extends SavedData {
 			}
 			this.inventory = new SimpleContainer(this.unlockedSlots);
 		}
+		public boolean isSlotUnlocked(int slot) {
+            return slot >= 0 && slot < unlockedSlots;
+        }
+
+        public int getUnlockedSlots() {
+            return unlockedSlots;
+        }
 
 	}
 

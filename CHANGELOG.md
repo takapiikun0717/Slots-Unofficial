@@ -33,3 +33,10 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Port to 1.20.1.
 - We've added the ability to open the “slots” inventory from the player's inventory.
+
+
+## [1.20.1-1.5.0]
+
+### Added
+- Port to 1.20.1.
+- We added the /slots [open,give] command and changed the way slots are opened to allow manual opening via command.

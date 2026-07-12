@@ -6,5 +6,13 @@
   "slots.config.level_per_slot": "スロット解放に必要なレベル",
   "slots.config.generate_item_reward": "スロット報酬アイテムを生成する",
   "slots.config.preserve_rewards_on_death": "死亡時に報酬スロットを保持する",
-  "slots.config.max_unlocked_slots": "最大解放スロット数"
+  "slots.config.max_unlocked_slots": "最大解放スロット数",
+  "commands.slots.open.self": "[Slots Unofficial]自分のスロットインベントリを開きました。",
+  "commands.slots.open.success": "[Slots Unofficial]%s人のスロットインベントリを開きました。",
+  "commands.slots.give.failed": "[Slots Unofficial]指定したスロットは存在しないか、\n既にアイテムがあるため実行できませんでした",
+  "commands.slots.give.success": "[Slots Unofficial]指定したスロットにアイテムを配置しました",
+  "commands.slots.unlock.success": "[Slots Unofficial]スロットを解放しました！",
+  "commands.slots.unlock.not_enough_xp": "[Slots Unofficial]経験値が足りません。",
+  "commands.slots.unlock.max_slots": "[Slots Unofficial]これ以上スロットは解放できません。",
+  "commands.slots.unlock.success_multiple": "[Slots Unofficial]%s個のスロットを解放しました！"
 }

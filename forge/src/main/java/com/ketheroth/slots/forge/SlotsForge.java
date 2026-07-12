@@ -1,7 +1,7 @@
 package com.ketheroth.slots.forge;
 
 import com.ketheroth.slots.Slots;
-import com.ketheroth.slots.common.config.SlotsConfig;
+import com.ketheroth.slots.common.command.SlotsCommand;
 import com.ketheroth.slots.common.events.ServerEvents;
 import com.ketheroth.slots.common.lootmodifier.SlotsLootModifier;
 import com.ketheroth.slots.common.network.SyncPlayerDataPacket;
@@ -9,6 +9,7 @@ import com.ketheroth.slots.common.networking.SlotsPacketHandler;
 import com.ketheroth.slots.common.registry.ModItems;
 import com.ketheroth.slots.common.world.SlotsSavedData;
 import com.mojang.serialization.Codec;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -16,9 +17,9 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,7 +28,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
 
 @Mod(Slots.MOD_ID)
 @Mod.EventBusSubscriber
@@ -73,40 +73,6 @@ public class SlotsForge {
 		ServerEvents.onPlayerDeath(event.getEntity(), event.getSource());
 	}
 
-	@SubscribeEvent
-	public static void onXpLevelChange(PlayerXpEvent.LevelChange event) {
-		Player player = event.getEntity();
-		if (player.level().isClientSide) {
-			return;
-		}
-		SlotsSavedData.PlayerData playerData = SlotsSavedData.getPlayerUnlockedSlots(player);
-		int experienceLevel = player.experienceLevel + event.getLevels();
-		if (experienceLevel < 0) {
-			experienceLevel = 0;
-		}
-		int newSlotAmount = Math.min(SlotsConfig.getMaxUnlockedSlots(), experienceLevel / SlotsConfig.levelPerSlot);
-		
-		int delta = newSlotAmount - playerData.getXpUnlockedSlots();
-		if (delta == 0) {
-			return;
-		}
-		if (delta > 0) {
-			for (int i = 0; i < delta; i++) {
-				playerData.addSlot();
-			}
-		} else {
-			for (int i = delta; i < 0; i++) {
-				ItemStack stack = playerData.removeSlot();
-				if (!stack.isEmpty()) {
-					addOrDropItems(player, stack);
-				}
-			}
-		}
-		if (player instanceof ServerPlayer serverPlayer) {
-			SlotsPacketHandler.INSTANCE.sendTo(new SyncPlayerDataPacket(playerData), serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-		}
-	}
-
 	private static void addOrDropItems(Player player, ItemStack stack) {
 		if (!player.getInventory().add(stack)) {
 			// can't add to player inventory, drop the item
@@ -116,5 +82,12 @@ public class SlotsForge {
 			player.level().addFreshEntity(itementity);
 		}
 	}
+	@SubscribeEvent
+    public static void onRegisterCommands(RegisterCommandsEvent event) {
+        SlotsCommand.register(
+            event.getDispatcher(),
+            event.getBuildContext()
+        );
+    }
 
 }
