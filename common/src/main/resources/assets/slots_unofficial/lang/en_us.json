@@ -14,5 +14,10 @@
     "commands.slots.unlock.success": "[Slots Unofficial]Unlocked a new slot!",
     "commands.slots.unlock.not_enough_xp": "[Slots Unofficial]You don't have enough experience!",
 	"commands.slots.unlock.max_slots": "[Slots Unofficial]You have reached the maximum number of slots.",
-	"commands.slots.unlock.success_multiple": "[Slots Unofficial]Unlocked %s slots!"
+	"commands.slots.unlock.success_multiple": "[Slots Unofficial]Unlocked %s slots!",
+	"commands.slots.unlock.admin.success": "[Slots Unofficial]Unlocked one slot for %s.",
+    "commands.slots.unlock.admin.success_multiple": "[Slots Unofficial]Unlocked %2$s slots for %1$s.",
+    "commands.slots.unlock.admin.success_players": "[Slots Unofficial]Unlocked %s player slots",
+    "commands.slots.unlock.admin.success_multiple_players": "[Slots Unofficial]We have unlocked %s slots for %s players."
+
 }

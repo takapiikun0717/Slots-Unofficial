@@ -12,7 +12,11 @@
   "commands.slots.give.failed": "[Slots Unofficial]指定したスロットは存在しないか、\n既にアイテムがあるため実行できませんでした",
   "commands.slots.give.success": "[Slots Unofficial]指定したスロットにアイテムを配置しました",
   "commands.slots.unlock.success": "[Slots Unofficial]スロットを解放しました！",
-  "commands.slots.unlock.not_enough_xp": "[Slots Unofficial]経験値が足りません。",
-  "commands.slots.unlock.max_slots": "[Slots Unofficial]これ以上スロットは解放できません。",
-  "commands.slots.unlock.success_multiple": "[Slots Unofficial]%s個のスロットを解放しました！"
+  "commands.slots.unlock.not_enough_xp": "[Slots Unofficial]経験値が足りません",
+  "commands.slots.unlock.max_slots": "[Slots Unofficial]これ以上スロットは解放できません",
+  "commands.slots.unlock.success_multiple": "[Slots Unofficial]%s個のスロットを解放しました！",
+  "commands.slots.unlock.admin.success": "[Slots Unofficial]%s のスロットを1個解放しました",
+  "commands.slots.unlock.admin.success_multiple": "[Slots Unofficial]%s のスロットを%s個解放しました",
+  "commands.slots.unlock.admin.success_players": "[Slots Unofficial]%s人のプレイヤーのスロットを解放しました",
+  "commands.slots.unlock.admin.success_multiple_players": "[Slots Unofficial]%s人のプレイヤーに%s個ずつスロットを解放しました"
 }

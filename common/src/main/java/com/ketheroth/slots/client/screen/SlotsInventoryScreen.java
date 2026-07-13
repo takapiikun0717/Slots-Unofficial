@@ -2,11 +2,13 @@ package com.ketheroth.slots.client.screen;
 
 import com.ketheroth.slots.Slots;
 import com.ketheroth.slots.common.inventory.container.SlotsMenu;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.gui.components.Button;
 
 public class SlotsInventoryScreen extends AbstractContainerScreen<SlotsMenu> {
 
@@ -37,6 +39,21 @@ public class SlotsInventoryScreen extends AbstractContainerScreen<SlotsMenu> {
 		this.renderTooltip(guiGraphics, mouseX, mouseY);
 		// TODO: @ketheroth render next slot to unlock "unlock this slot by having x xp levels"
 	}
+    @Override
+    protected void init() {
+        super.init();
+
+        this.addRenderableWidget(
+            Button.builder(Component.literal("+"), button -> {
+
+            }).bounds(
+                this.leftPos + 157,
+                this.topPos + 3,
+                12,
+                12
+            ).build()
+        );
+    }
 
 	@Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
