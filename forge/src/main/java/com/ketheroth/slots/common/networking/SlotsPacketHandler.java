@@ -9,6 +9,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import com.ketheroth.slots.common.network.UnlockSlotPacket;
 
 public class SlotsPacketHandler {
 
@@ -36,6 +37,16 @@ public class SlotsPacketHandler {
 			);
 			ctx.get().setPacketHandled(true);
 		});
+		INSTANCE.registerMessage(2,UnlockSlotPacket.class,UnlockSlotPacket::write,buf -> {
+			UnlockSlotPacket packet = new UnlockSlotPacket();
+            packet.read(buf);
+            return packet;
+        },(packet, contextSupplier) -> {
+            NetworkEvent.Context context = contextSupplier.get();
+                context.enqueueWork(() ->
+                    packet.handle(context.getSender()));
+                context.setPacketHandled(true);
+            }
+        );
 	}
-
 }

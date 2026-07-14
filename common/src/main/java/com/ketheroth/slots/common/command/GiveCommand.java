@@ -28,9 +28,6 @@ public class GiveCommand {
                     Commands.argument("player", EntityArgument.players())
 
                 .then(
-                    Commands.argument("slot", IntegerArgumentType.integer(0))
-
-                .then(
                     Commands.argument("item", ItemArgument.item(buildContext))
 
                 // /slots give <player> <slot> <item>
@@ -38,9 +35,6 @@ public class GiveCommand {
 
                     Collection<ServerPlayer> players =
                     EntityArgument.getPlayers(command, "player");
-
-                    int slot =
-                    IntegerArgumentType.getInteger(command, "slot");
 
                     ItemInput input =
                     ItemArgument.getItem(command, "item");
@@ -52,25 +46,13 @@ public class GiveCommand {
 
                         for (ServerPlayer player : players) {
 
-                    SlotsSavedData.PlayerData playerData =
-                    SlotsSavedData.getPlayerUnlockedSlots(player);
-
-                        if (slot < 0 || slot >= playerData.getTotalUnlockedSlots()) {
-                                continue;
-                        }
-
-                        if (!playerData.inventory.getItem(slot).isEmpty()) {
-                                continue;
-                        }
-
-                                playerData.inventory.setItem(slot, stack.copy());
-                                PlatformUtils.syncPlayerData(player);
+                            if (givePlayer(player, stack.copy())) {
                                 success++;
+                            }
                         }
-
                         if (success == 0) {
                                 command.getSource().sendFailure(
-                                Component.translatable("commands.slots.give.failed")
+                                Component.translatable("commands.slots.give.not_enough_space")
                                 
                            );
                            return 0;
@@ -99,9 +81,6 @@ public class GiveCommand {
                     Collection<ServerPlayer> players =
                     EntityArgument.getPlayers(command, "player");
 
-                    int slot =
-                    IntegerArgumentType.getInteger(command, "slot");
-
                     ItemInput input =
                     ItemArgument.getItem(command, "item");
 
@@ -114,27 +93,15 @@ public class GiveCommand {
 
                         for (ServerPlayer player : players) {
 
-                                SlotsSavedData.PlayerData playerData =
-                                SlotsSavedData.getPlayerUnlockedSlots(player);
-
-                        if (slot < 0 || slot >= playerData.getTotalUnlockedSlots()) {
-                                continue;
-                        }
-
-                                                                                        
-                        if (!playerData.inventory.getItem(slot).isEmpty()) {
-                                continue;
-                        }
-
-                                playerData.inventory.setItem(slot, stack.copy()); 
-                                PlatformUtils.syncPlayerData(player);
+                            if (givePlayer(player, stack.copy())) {
                                 success++;
-                                                                                        
-                        }
+                            }
+
+                        }  
 
                         if (success == 0) {
                                 command.getSource().sendFailure(
-                                Component.translatable("commands.slots.give.failed")
+                                Component.translatable("commands.slots.give.not_enough_space")
                             );
                             return 0;
                         }
@@ -153,7 +120,88 @@ public class GiveCommand {
                 })
               )
             )
-          )
-       );
+        );
+    }
+    private static boolean givePlayer(ServerPlayer player, ItemStack stack) {
+
+    SlotsSavedData.PlayerData playerData =
+            SlotsSavedData.getPlayerUnlockedSlots(player);
+    int remainingSpace = 0;
+
+for (int i = 0; i < playerData.getTotalUnlockedSlots(); i++) {
+
+    ItemStack slotStack = playerData.inventory.getItem(i);
+
+    if (slotStack.isEmpty()) {
+        remainingSpace += stack.getMaxStackSize();
+    } else if (ItemStack.isSameItemSameTags(slotStack, stack)) {
+        remainingSpace += slotStack.getMaxStackSize() - slotStack.getCount();
+    }
+    if (remainingSpace < stack.getCount()) {
+    return false;
+}
+}
+
+    // 渡すアイテムのコピー
+    ItemStack remaining = stack.copy();
+
+    // ① 既存スタックへ追加
+    for (int i = 0; i < playerData.getTotalUnlockedSlots(); i++) {
+
+        if (remaining.isEmpty()) {
+            break;
+        }
+
+        ItemStack slotStack = playerData.inventory.getItem(i);
+
+        if (slotStack.isEmpty()) {
+            continue;
+        }
+
+        if (!ItemStack.isSameItemSameTags(slotStack, remaining)) {
+            continue;
+        }
+
+        int max = slotStack.getMaxStackSize();
+
+        if (slotStack.getCount() >= max) {
+            continue;
+        }
+
+        int move = Math.min(max - slotStack.getCount(), remaining.getCount());
+
+        slotStack.grow(move);
+        remaining.shrink(move);
+    }
+
+    // ② 空きスロットへ順番に入れる
+    for (int i = 0; i < playerData.getTotalUnlockedSlots(); i++) {
+
+        if (remaining.isEmpty()) {
+            break;
+        }
+
+        ItemStack slotStack = playerData.inventory.getItem(i);
+
+        if (!slotStack.isEmpty()) {
+            continue;
+        }
+
+        int move = Math.min(
+                remaining.getMaxStackSize(),
+                remaining.getCount());
+
+        ItemStack copy = remaining.copy();
+        copy.setCount(move);
+
+        playerData.inventory.setItem(i, copy);
+
+        remaining.shrink(move);
+    }
+
+    PlatformUtils.syncPlayerData(player);
+
+    // 全部渡せたか
+    return remaining.isEmpty();
     }
 }

@@ -18,5 +18,14 @@
   "commands.slots.unlock.admin.success": "[Slots Unofficial]%s のスロットを1個解放しました",
   "commands.slots.unlock.admin.success_multiple": "[Slots Unofficial]%s のスロットを%s個解放しました",
   "commands.slots.unlock.admin.success_players": "[Slots Unofficial]%s人のプレイヤーのスロットを解放しました",
-  "commands.slots.unlock.admin.success_multiple_players": "[Slots Unofficial]%s人のプレイヤーに%s個ずつスロットを解放しました"
+  "commands.slots.unlock.admin.success_multiple_players": "[Slots Unofficial]%s人のプレイヤーに%s個ずつスロットを解放しました",
+  "commands.slots.give.not_enough_space": "[Slots Unofficial]解放済みスロットに入りきりません。",
+  "commands.slots.lock.success": "[Slots Unofficial]スロットを1個ロックしました。",
+  "commands.slots.lock.success_multiple": "[Slots Unofficial]スロットを%s個ロックしました。",
+  "commands.slots.lock.failed": "[Slots Unofficial]これ以上スロットをロックできません。",
+  "commands.slots.lock.admin.success": "[Slots Unofficial]%sのスロットを1個ロックしました。",
+  "commands.slots.lock.admin.success_multiple": "[Slots Unofficial]%sのスロットを%s個ロックしました。",
+  "commands.slots.lock.slot_not_empty": "[Slots Unofficial]最後のスロットにアイテムが入っているためロックできません。",
+  "commands.slots.lock.admin.success_players": "[Slots Unofficial]%s人のスロットを1個ロックしました。",
+  "commands.slots.lock.admin.success_multiple_players": "[Slots Unofficial]%s人のスロットを%s個ロックしました。"
 }

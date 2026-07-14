@@ -18,6 +18,14 @@
 	"commands.slots.unlock.admin.success": "[Slots Unofficial]Unlocked one slot for %s.",
     "commands.slots.unlock.admin.success_multiple": "[Slots Unofficial]Unlocked %2$s slots for %1$s.",
     "commands.slots.unlock.admin.success_players": "[Slots Unofficial]Unlocked %s player slots",
-    "commands.slots.unlock.admin.success_multiple_players": "[Slots Unofficial]We have unlocked %s slots for %s players."
-
+    "commands.slots.unlock.admin.success_multiple_players": "[Slots Unofficial]We have unlocked %s slots for %s players.",
+	"commands.slots.give.not_enough_space": "[Slots Unofficial]It won't fit in the available slots.",
+	"commands.slots.lock.success": "[Slots Unofficial] Locked 1 slot.",
+    "commands.slots.lock.success_multiple": "[Slots Unofficial] Locked %s slots. ",
+    "commands.slots.lock.failed": "[Slots Unofficial] Cannot lock any more slots.",
+    "commands.slots.lock.admin.success": "[Slots Unofficial] Locked 1 slot for %s. ",
+    "commands.slots.lock.admin.success_multiple": "[Slots Unofficial] Locked %s slots for %s.",
+    "commands.slots.lock.slot_not_empty": "[Slots Unofficial] Cannot lock because the last slot contains an item.",
+    "commands.slots.lock.admin.success_players": "[Slots Unofficial] Locked 1 slot for %s players.",
+    "commands.slots.lock.admin.success_multiple_players": "[Slots Unofficial] Locked %s slots for %s players."
 }

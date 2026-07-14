@@ -14,6 +14,7 @@ public class SlotsCommand {
                     .then(OpenCommand.register()) 
                     .then(GiveCommand.register(context)) 
                     .then(UnlockCommand.register())
+                    .then(LockCommand.register())
             ); 
         } 
 }

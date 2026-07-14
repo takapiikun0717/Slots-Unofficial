@@ -2,7 +2,6 @@ package com.ketheroth.slots.common.command;
 
 import java.util.Collection;
 
-import com.ketheroth.slots.common.config.SlotsConfig;
 import com.ketheroth.slots.common.utils.PlatformUtils;
 import com.ketheroth.slots.common.world.SlotsSavedData;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -14,14 +13,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.commands.arguments.EntityArgument;
 
-public class UnlockCommand {
+public class LockCommand {
 
     public static LiteralArgumentBuilder<CommandSourceStack> register() {
 
-        return Commands.literal("unlock")
+        return Commands.literal("lock")
                 .requires(source -> source.hasPermission(0))
 
-                // /slots unlock
+                // /slots lock
                 .executes(command -> {
 
                     ServerPlayer player = command.getSource().getPlayerOrException();
@@ -29,32 +28,32 @@ public class UnlockCommand {
                     SlotsSavedData.PlayerData playerData =
                     SlotsSavedData.getPlayerUnlockedSlots(player);
 
-                        if (playerData.getTotalUnlockedSlots() >= SlotsConfig.getMaxUnlockedSlots()) {
+                            int locked = lockPlayer(player, 1);
 
-                            command.getSource().sendFailure(
-                                Component.translatable("commands.slots.unlock.max_slots"));
+                        if (locked == 0) {
 
-                                return 0;
+                            int lastSlot = playerData.getTotalUnlockedSlots() - 1;
+
+                                if (lastSlot >= 0 &&
+                                    !playerData.inventory.getItem(lastSlot).isEmpty()) {
+                                        command.getSource().sendFailure(
+                                            Component.translatable("commands.slots.lock.slot_not_empty"));
+                                    } else {
+
+                                        command.getSource().sendFailure(
+                                            Component.translatable("commands.slots.lock.failed"));
+                                    }
+                                    return 0;
                         }
+                        PlatformUtils.syncPlayerData(player);
 
-                            int unlocked = unlockPlayer(player, 1);
-
-                        if (unlocked == 0) {
-
-                            command.getSource().sendFailure(
-                                Component.translatable("commands.slots.unlock.not_enough_xp"));
-                                return 0;
-                        }
-                    PlatformUtils.syncPlayerData(player);
-
-                    command.getSource().sendSuccess(
-                            () -> Component.translatable("commands.slots.unlock.success"),
+                        command.getSource().sendSuccess(
+                            () -> Component.translatable("commands.slots.lock.success"),
                             true);
-
-                    return unlocked;
+                        return locked;
                 })
 
-                // /slots unlock <count>
+                // /slots lock <count>
                 .then(
                     Commands.argument("count", IntegerArgumentType.integer(1))
                         .executes(command -> {
@@ -63,40 +62,47 @@ public class UnlockCommand {
 
                             int count = IntegerArgumentType.getInteger(command, "count");
 
-                            int unlocked = unlockPlayer(player, count);
-                                    
-                                if (unlocked == 0) {
+                            int locked = lockPlayer(player, count);
 
-                                SlotsSavedData.PlayerData playerData =
+                                if (locked == 0) {
+
+                                    SlotsSavedData.PlayerData playerData =
                                     SlotsSavedData.getPlayerUnlockedSlots(player);
 
-                                    if (playerData.getTotalUnlockedSlots() >= SlotsConfig.getMaxUnlockedSlots()) {
+                                    int lastSlot = playerData.getTotalUnlockedSlots() - 1;
 
-                                        command.getSource().sendFailure(
-                                            Component.translatable("commands.slots.unlock.max_slots"));
+                                        if (lastSlot >= 0 &&
+                                            !playerData.inventory.getItem(lastSlot).isEmpty()) {
+
+                                            command.getSource().sendFailure(
+                                                Component.translatable("commands.slots.lock.slot_not_empty"));
                                         } else {
 
-                                        command.getSource().sendFailure(
-                                            Component.translatable("commands.slots.unlock.not_enough_xp"));
+                                            command.getSource().sendFailure(
+                                                Component.translatable("commands.slots.lock.failed"));
                                         }
                                         return 0;
-                                    }
+                                }
+
                                 PlatformUtils.syncPlayerData(player);
-                                final int unlockedCount = unlocked;
+
+                                final int lockedCount = locked;
 
                                     command.getSource().sendSuccess(
                                         () -> Component.translatable(
-                                            "commands.slots.unlock.success_multiple",
-                                            unlockedCount),
-                                        true);
-                                return unlocked;
+                                            "commands.slots.lock.success_multiple",
+                                            lockedCount
+                                        ),
+                                        true
+                                    );
+                                    return locked;
                         })
                 )
                 .then(
                     Commands.argument("player", EntityArgument.players())
                 .requires(source -> source.hasPermission(2))
 
-                // /slots unlock <player>
+                // /slots lock <player>
                 .executes(command -> {
 
                     Collection<ServerPlayer> targets =
@@ -106,14 +112,14 @@ public class UnlockCommand {
 
                         for (ServerPlayer target : targets) {
 
-                            success += unlockPlayerAdmin(target, 1);
+                            success += lockPlayerAdmin(target, 1);
                             PlatformUtils.syncPlayerData(target);
                         }
 
                         if (success == 0) {
 
                             command.getSource().sendFailure(
-                                Component.translatable("commands.slots.unlock.max_slots"));
+                                Component.translatable("commands.slots.lock.failed"));
                             return 0;
                         }
 
@@ -124,7 +130,7 @@ public class UnlockCommand {
 
                                 command.getSource().sendSuccess(
                                     () -> Component.translatable(
-                                        "commands.slots.unlock.admin.success",
+                                        "commands.slots.lock.admin.success",
                                         target.getDisplayName()),
                                     true
                                 );
@@ -136,7 +142,7 @@ public class UnlockCommand {
 
                                 command.getSource().sendSuccess(
                                     () -> Component.translatable(
-                                        "commands.slots.unlock.admin.success_players",
+                                        "commands.slots.lock.admin.success_players",
                                         playerCount),
                                     true
                                 );
@@ -144,7 +150,7 @@ public class UnlockCommand {
                             return success;
                 })
 
-                // /slots unlock <player> <count>
+                // /slots lock <player> <count>
                 .then(
                     Commands.argument("count", IntegerArgumentType.integer(1))
                 .executes(command -> {
@@ -159,14 +165,14 @@ public class UnlockCommand {
 
                         for (ServerPlayer target : targets) {
 
-                            success += unlockPlayerAdmin(target, count);
+                            success += lockPlayerAdmin(target, count);
                             PlatformUtils.syncPlayerData(target);
                         }
 
                         if (success == 0) {
 
                             command.getSource().sendFailure(
-                                Component.translatable("commands.slots.unlock.max_slots"));
+                                Component.translatable("commands.slots.lock.failed"));
                             return 0;
                         }
 
@@ -176,7 +182,7 @@ public class UnlockCommand {
 
                         command.getSource().sendSuccess(
                                 () -> Component.translatable(
-                                        "commands.slots.unlock.admin.success_multiple",
+                                        "commands.slots.lock.admin.success_multiple",
                                         target.getDisplayName(),
                                         count),
                                 true);
@@ -186,7 +192,7 @@ public class UnlockCommand {
 
                         command.getSource().sendSuccess(
                                 () -> Component.translatable(
-                                        "commands.slots.unlock.admin.success_multiple_players",
+                                        "commands.slots.lock.admin.success_multiple_players",
                                         playerCount,
                                         count),
                                 true);
@@ -198,48 +204,34 @@ public class UnlockCommand {
     }
 
     /**
-     * 指定した数だけスロットを解放する
-     * @return 実際に解放できた数
+     * 指定した数だけスロットをロックする
+     * @return 実際にロックできた数
      */
-    public static int unlockPlayer(ServerPlayer player, int count) {
+    private static int lockPlayer(ServerPlayer player, int count) {
 
         SlotsSavedData.PlayerData playerData =
             SlotsSavedData.getPlayerUnlockedSlots(player);
 
-        int unlocked = 0;
-
-        for (int i = 0; i < count; i++) {
-
-            if (playerData.getTotalUnlockedSlots() >= SlotsConfig.getMaxUnlockedSlots()) {
-                break;
-            }
-            if (player.experienceLevel < SlotsConfig.levelPerSlot) {
-                break;
-            }
-            player.giveExperienceLevels(-SlotsConfig.levelPerSlot);
-
-            playerData.addSlot();
-
-            unlocked++;
-        }
-        return unlocked;
-    }
-    public static int unlockPlayerAdmin(ServerPlayer player, int count) {
-
-        SlotsSavedData.PlayerData playerData =
-            SlotsSavedData.getPlayerUnlockedSlots(player);
-
-        int unlocked = 0;
+        int locked = 0;
 
             for (int i = 0; i < count; i++) {
 
-                if (playerData.getTotalUnlockedSlots() >= SlotsConfig.getMaxUnlockedSlots()) {
-                    break;
-                } 
-                playerData.addSlot();
-
-                unlocked++;
+        int lastSlot = playerData.getTotalUnlockedSlots() - 1;           
+            if (lastSlot < 0) {
+                break;
             }
-        return unlocked;
+            if (!playerData.inventory.getItem(lastSlot).isEmpty()) {
+                 break;
+            }
+        playerData.removeSlot();
+        locked++;
+    }
+
+    PlatformUtils.syncPlayerData(player);
+
+    return locked;
+    }
+    public static int lockPlayerAdmin(ServerPlayer player, int count) {
+        return lockPlayer(player, count);
     }
 }
