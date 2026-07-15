@@ -40,3 +40,14 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Port to 1.20.1.
 - We added the /slots [open,give] command and changed the way slots are opened to allow manual opening via command.
+
+
+## [1.20.1-1.6.0]
+
+### Added
+- Port to 1.20.1.
+- Added a new /slots [clear,lock,unlock,set,unlock] command
+- We added a “+” button to the slot inventory; pressing that button now unlocks a slot.
+
+### Fixed
+- I've updated the “slots give” specification to match the vanilla version.
