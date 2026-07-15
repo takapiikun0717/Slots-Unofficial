@@ -141,16 +141,7 @@ public class SlotsSavedData extends SavedData {
 			}
 			return ItemStack.EMPTY;
 		}
-
-		public void resetAfterDeath() {
-			if (SlotsConfig.preserveRewardsOnDeath) {
-				this.unlockedSlots = this.unremovableSlots;
-			} else {
-				this.unlockedSlots = 0;
-				this.unremovableSlots = 0;
-			}
-			this.inventory = new SimpleContainer(this.unlockedSlots);
-		}
+		
 		public boolean isSlotUnlocked(int slot) {
             return slot >= 0 && slot < unlockedSlots;
         }

@@ -34,7 +34,6 @@ public class ServerEvents {
             player.level().addFreshEntity(itementity);
         }
 
-        playerData.resetAfterDeath();
         PlatformUtils.syncPlayerData(player);
     }
 }

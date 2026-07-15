@@ -30,7 +30,7 @@ public class GiveCommand {
                 .then(
                     Commands.argument("item", ItemArgument.item(buildContext))
 
-                // /slots give <player> <slot> <item>
+                // /slots give <player> <item>
                 .executes(command -> {
 
                     Collection<ServerPlayer> players =
@@ -71,7 +71,7 @@ public class GiveCommand {
                                 return success;
                         })
 
-                // /slots give <player> <slot> <item> <count>
+                // /slots give <player> <item> <count>
                 .then(
                     Commands.argument("count",
                     IntegerArgumentType.integer(1))
@@ -124,23 +124,25 @@ public class GiveCommand {
     }
     private static boolean givePlayer(ServerPlayer player, ItemStack stack) {
 
-    SlotsSavedData.PlayerData playerData =
+        SlotsSavedData.PlayerData playerData =
             SlotsSavedData.getPlayerUnlockedSlots(player);
-    int remainingSpace = 0;
+        int remainingSpace = 0;
 
-for (int i = 0; i < playerData.getTotalUnlockedSlots(); i++) {
+            for (int i = 0; i < playerData.getTotalUnlockedSlots(); i++) {
 
-    ItemStack slotStack = playerData.inventory.getItem(i);
+                ItemStack slotStack = playerData.inventory.getItem(i);
 
-    if (slotStack.isEmpty()) {
-        remainingSpace += stack.getMaxStackSize();
-    } else if (ItemStack.isSameItemSameTags(slotStack, stack)) {
-        remainingSpace += slotStack.getMaxStackSize() - slotStack.getCount();
-    }
-    if (remainingSpace < stack.getCount()) {
-    return false;
-}
-}
+                    if (slotStack.isEmpty()) {
+                        remainingSpace += stack.getMaxStackSize();
+                    } else if (
+                        ItemStack.isSameItemSameTags(slotStack, stack)) {
+                        remainingSpace += slotStack.getMaxStackSize() - slotStack.getCount();
+                    }
+            }
+
+            if (remainingSpace < stack.getCount()) {
+                return false;
+            }
 
     // 渡すアイテムのコピー
     ItemStack remaining = stack.copy();

@@ -3,20 +3,16 @@ package com.ketheroth.slots.forge;
 import com.ketheroth.slots.Slots;
 import com.ketheroth.slots.common.command.SlotsCommand;
 import com.ketheroth.slots.common.events.ServerEvents;
-import com.ketheroth.slots.common.lootmodifier.SlotsLootModifier;
 import com.ketheroth.slots.common.network.SyncPlayerDataPacket;
 import com.ketheroth.slots.common.networking.SlotsPacketHandler;
-import com.ketheroth.slots.common.registry.ModItems;
 import com.ketheroth.slots.common.world.SlotsSavedData;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -41,23 +37,11 @@ public class SlotsForge {
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
     bus.addListener(SlotsForge::onCommonSetup);
-    bus.addListener(SlotsForge::onCreativeTabBuild);
 
-
-    GLOBAL_LOOT_MODIFIER_SERIALIZER.register(bus);
-    GLOBAL_LOOT_MODIFIER_SERIALIZER.register("chest_loot_modifier", () -> SlotsLootModifier.CODEC);
     }
 
 	public static void onCommonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(SlotsPacketHandler::init);
-	}
-
-
-
-	public static void onCreativeTabBuild(BuildCreativeModeTabContentsEvent event) {
-		if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-			event.accept(ModItems.SLOT_REWARD.get());
-		}
 	}
 
 	@SubscribeEvent

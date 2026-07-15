@@ -2,10 +2,7 @@
 	"screen.slots.slots_inventory": "Slots Inventory",
 	"key.slots.inventory": "Open Slots Inventory",
 	"slots.key.category": "Slots",
-	"item.slots.slot_reward": "Slot Reward",
 	"slots.config.level_per_slot": "Level per slot",
-	"slots.config.generate_item_reward": "Generate item reward",
-	"slots.config.preserve_rewards_on_death": "Preserve rewards on death",
 	"slots.config.max_unlocked_slots": "Maximum unlocked slots",
     "commands.slots.open.self": "[Slots Unofficial]Opened your Slots inventory.",
     "commands.slots.open.success": "[Slots Unofficial]Opened Slots inventory for %s player(s).",
@@ -27,5 +24,13 @@
     "commands.slots.lock.admin.success_multiple": "[Slots Unofficial] Locked %s slots for %s.",
     "commands.slots.lock.slot_not_empty": "[Slots Unofficial] Cannot lock because the last slot contains an item.",
     "commands.slots.lock.admin.success_players": "[Slots Unofficial] Locked 1 slot for %s players.",
-    "commands.slots.lock.admin.success_multiple_players": "[Slots Unofficial] Locked %s slots for %s players."
+    "commands.slots.lock.admin.success_multiple_players": "[Slots Unofficial] Locked %s slots for %s players.",
+    "commands.slots.set.success": "[Slots Unofficial]I have set the slot for %s people.",
+    "commands.slots.set.failed": "[Slots Unofficial]Unable to configure the slot.",
+    "commands.slots.set.invalid_slot": "[Slots Unofficial]The specified slot does not exist.",
+    "commands.slots.set.stack_too_large": "[Slots Unofficial]The number of items exceeds the maximum stack size.",
+    "commands.slots.clear.success": "[Slots Unofficial]Removed %s item(s) from slot inventory.",
+    "commands.slots.clear.failed": "[Slots Unofficial]No matching items were found.",
+    "commands.slots.clear.success.players": "[Slots Unofficial]Removed %s item(s) from %s player(s).",
+    "commands.slots.clear.invalid_player": "[Slots Unofficial]No valid player found."
 }

@@ -1,4 +1,5 @@
 package com.ketheroth.slots.common.command; 
+
 import com.mojang.brigadier.CommandDispatcher; 
 import net.minecraft.commands.CommandBuildContext; 
 import net.minecraft.commands.CommandSourceStack; 
@@ -15,6 +16,8 @@ public class SlotsCommand {
                     .then(GiveCommand.register(context)) 
                     .then(UnlockCommand.register())
                     .then(LockCommand.register())
+                    .then(SetCommand.register(context))
+                    .then(ClearCommand.register(context))
             ); 
         } 
 }
